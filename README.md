@@ -1,2 +1,0 @@
-# appl-watch
-apple description
