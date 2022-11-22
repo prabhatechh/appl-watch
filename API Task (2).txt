@@ -1,0 +1,205 @@
+MAIN PROG
+
+package com.api;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
+import io.restassured.response.Response;
+
+public class RealTimeAddress extends APIBaseClass {
+	String logtoken;
+	String stateId;
+	int stateIdNum;
+	int cityId;
+	String address_id;
+	
+@Test (priority = 5)
+public void updateUserAddress() {
+//1.Headers
+	List<Header> listHeader = new ArrayList<Header>();
+	Header h1 = new Header("accept", "application/json");
+	Header h2 = new Header ("Authorization", "Bearer "+logtoken);
+	Header h3 = new Header("Content-Type", "application/json");
+	listHeader.add(h1);
+	listHeader.add(h2);
+	listHeader.add(h3);
+		
+	Headers headers = new Headers(listHeader);
+	addHeaders(headers);
+
+//2.Payload
+	UpdateUserAddress_Input_Pojo updateUserAddress_Input_Pojo = new UpdateUserAddress_Input_Pojo(address_id, "Shankar", "pandy", "9943920450", "M8/S3", stateIdNum, cityId, 101, "620019", "Lakshmima Appartments", "Home");
+	addBody(updateUserAddress_Input_Pojo);
+	
+//3.Method Type
+	Response response = requestType("PUT", "https://omrbranch.com/api/updateUserAddress");
+	
+	int statusCode = getStatusCode(response);
+	System.out.println(statusCode);
+	Assert.assertEquals(statusCode, 200, "Verify Status Code" );
+	
+	UpdateUserAddress_Output_Pojo updateUserAddress_Output_Pojo = response.as(UpdateUserAddress_Output_Pojo.class);
+	String message = updateUserAddress_Output_Pojo.getMessage();
+	System.out.println(message);
+	Assert.assertEquals(message, "Address updated successfully", "Verify Address updated successfully");
+}
+
+@Test (priority = 6)
+private void deleteUserAddress() {
+//1.Headers
+	List<Header> listHeader = new ArrayList<Header>();
+	Header h1 = new Header("accept", "application/json");
+	Header h2 = new Header ("Authorization", "Bearer "+logtoken);
+	Header h3 = new Header("Content-Type", "application/json");
+	listHeader.add(h1);
+	listHeader.add(h2);
+	listHeader.add(h3);
+	
+	Headers headers = new Headers(listHeader);
+	addHeaders(headers);
+
+//2.Payload
+	DeleteUserAddress_Input_Pojo deleteUserAddress_Input_Pojo = new DeleteUserAddress_Input_Pojo(address_id);
+	addBody(deleteUserAddress_Input_Pojo);
+	
+//3.Method Type
+	Response response = requestType("DELETE", "https://omrbranch.com/api/deleteAddress");
+	
+	int statusCode = getStatusCode(response);
+	System.out.println(statusCode);
+	Assert.assertEquals(statusCode, 200, "Verify Status Code" );
+	
+	DeleteUserAddress_Output_Pojo deleteUserAddress_Output_Pojo = response.as(DeleteUserAddress_Output_Pojo.class);
+	String message = deleteUserAddress_Output_Pojo.getMessage();
+	System.out.println(message);
+	Assert.assertEquals(message, "Address deleted successfully", "Verify Address deleted successfully");
+}
+
+
+@Test (priority = 2)
+public void getStateId() {
+//1.Adds Header
+	addHeader("accept", "application/json");
+	
+//2.Request Type	
+	Response response = requestType("GET", "https://omrbranch.com/api/stateList");
+	
+	int statusCode = getStatusCode(response);
+	System.out.println(statusCode);
+	Assert.assertEquals(statusCode, 200, "Verify Status Code" );
+	
+	GetStateId_Output_Pojo getStateId_Output_Pojo = response.as(GetStateId_Output_Pojo.class);
+	ArrayList<StateList> listStateDetails = getStateId_Output_Pojo.getData();
+	for (StateList eachStateDetail : listStateDetails) {
+	String stateName = eachStateDetail.getName();
+	if (stateName.equals("Tamil Nadu")) {
+		stateIdNum = eachStateDetail.getId();
+		stateId = String.valueOf(stateIdNum);
+		System.out.println(stateId);
+		Assert.assertEquals(stateName, "Tamil Nadu", "Verify State Name is TN");
+		break;
+	}
+	}
+}
+
+@Test (priority = 3)
+public void getCityId() { 
+//1.Headers
+	List<Header> listHeader = new ArrayList<Header>();
+	Header h1 = new Header("accept", "application/json");
+	Header h2 = new Header("Content-Type", "application/json");
+	listHeader.add(h1);
+	listHeader.add(h2);
+	
+	Headers headers = new Headers(listHeader);
+	addHeaders(headers);
+
+//2.PayLoad
+	GetCityId_Input_Pojo cityId_Input_Pojo = new GetCityId_Input_Pojo(stateId);
+	addBody(cityId_Input_Pojo);
+	
+//3.Request Type
+	Response response = requestType("POST", "https://omrbranch.com/api/cityList");
+	
+	int statusCode = getStatusCode(response);
+	System.out.println(statusCode);
+	Assert.assertEquals(statusCode, 200, "Verify Status Code" );
+	
+	GetCityId_Output_Pojo getCityId_Output_Pojo = response.as(GetCityId_Output_Pojo.class);
+	ArrayList<CityList> listCityDetails = getCityId_Output_Pojo.getData();
+	for (CityList eachCityList : listCityDetails) {
+	String cityName = eachCityList.getName();
+	if (cityName.equals("Yercaud")) {
+		cityId = eachCityList.getId();
+		System.out.println(cityId);
+		Assert.assertEquals(cityName, "Yercaud", "Verify Yercaud is Present");
+		break;
+	}
+	}
+}
+
+
+@Test (priority = 4)
+private void addUserAddress() {
+//1.Headers
+	List<Header> listHeader = new ArrayList<Header>();
+	Header h1 = new Header("accept", "application/json");
+	Header h2 = new Header ("Authorization", "Bearer "+logtoken);
+	Header h3 = new Header("Content-Type", "application/json");
+	listHeader.add(h1);
+	listHeader.add(h2);
+	listHeader.add(h3);
+	
+	Headers headers = new Headers(listHeader);
+	addHeaders(headers);
+
+//2.Payload
+	AddUserAddress_Input_Pojo addUserAddress_Input_Pojo = new AddUserAddress_Input_Pojo("Praveen", "Kumar", "9003645144", "2/546", stateIdNum, cityId, 101, "600041", "first Street, Sriram Avenue", "Home");
+	addBody(addUserAddress_Input_Pojo);
+	
+//3.Method Type 
+	Response response = requestType("POST", "https://omrbranch.com/api/addUserAddress");
+
+	int statusCode = getStatusCode(response);
+	System.out.println(statusCode);
+	Assert.assertEquals(statusCode, 200, "Verify Status Code" );
+	
+	AddUserAddress_Output_Pojo addUserAddress_Output_Pojo = response.as(AddUserAddress_Output_Pojo.class);
+	String message = addUserAddress_Output_Pojo.getMessage();
+	int addressIdNum = addUserAddress_Output_Pojo.getAddress_id();
+	address_id = String.valueOf(addressIdNum);
+	Assert.assertEquals(message, "Address added successfully", "Verify Address Added Successfully" );
+}
+
+
+@Test (priority = 1)
+public void login () {
+	//1.Header
+		addHeader("Content-Type", "application/json");
+	//2.Basic Auth
+		basicAuth("praveen71989@gmail.com", "Pr@veen71989");
+	//3.Method Type
+		Response response = requestType("POST", "https://omrbranch.com/api/postmanBasicAuthLogin");
+		
+		int statusCode = getStatusCode(response);
+		System.out.println(statusCode);
+		Assert.assertEquals(statusCode, 200, "Verify status code");
+
+		
+		String resBodyAsPrettyString = getResBodyAsPrettyString(response);
+		System.out.println(resBodyAsPrettyString);
+				
+		Login_Output_Pojo login_Output_Pojo = response.as(Login_Output_Pojo.class);
+		String first_name = login_Output_Pojo.getData().getFirst_name();
+		logtoken = login_Output_Pojo.getData().getLogtoken();
+		Assert.assertEquals(first_name, "Praveen", "Verify First Name");
+}
+}
+______________________________________________________________________________________________________________________
+
