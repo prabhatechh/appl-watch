@@ -1,0 +1,56 @@
+package com.endpoint;
+
+public interface EndPoints {
+
+	public static final String POSTMANBASICAUTH = ("https://omrbranch.com/api/postmanBasicAuthLogin");
+	public static final String STATELIST = ("https://omrbranch.com/api/stateList");
+	public static final String CITYLIST = ("https://omrbranch.com/api/cityList");
+	public static final String ADDADDRESSUSER = ("https://omrbranch.com/api/addUserAddress");
+	public static final String UPDATEUSERADDRESS = ("https://omrbranch.com/api/updateUserAddress");
+	public static final String DELETADDRESS =("https://omrbranch.com/api/deleteAddress");
+	public static final String GETADDRESS =("https://omrbranch.com/api/getUserAddress");
+	public static final String SEARCHPRODUCT = ("https://omrbranch.com/api/searchProduct");
+	public static final String CHANGEPROFILEPIC = ("https://omrbranch.com/api/changeProfilePic");
+	
+	
+	
+}
+
+
+
+
+
+Candidate Name: prabhakaran s
+Mobile num: 7708718487
+Company Name:LTI
+Round :1ST
+Date:19/NOV/22
+Day: Saturday
+Time:2-3 PM
+Duration: -
+HR number :
+Linked recieved: No
+
+
+
+
+
+
+Version 107.0.5304.107
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
