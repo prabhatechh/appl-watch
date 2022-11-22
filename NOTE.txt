@@ -3,6 +3,7 @@ package com.endpoint;
 public interface EndPoints {
 
 	public static final String POSTMANBASICAUTH = ("https://omrbranch.com/api/postmanBasicAuthLogin");
+	HHHHHHHHHHHHHHHHHHHHHHHBABSABHGVSHDSJCBJBVBCU
 	public static final String STATELIST = ("https://omrbranch.com/api/stateList");
 	public static final String CITYLIST = ("https://omrbranch.com/api/cityList");
 	public static final String ADDADDRESSUSER = ("https://omrbranch.com/api/addUserAddress");
