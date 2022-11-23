@@ -20,16 +20,7 @@ public interface EndPoints {
 
 
 
-Candidate Name: prabhakaran s
-Mobile num: 7708718487
-Company Name:LTI
-Round :1ST
-Date:19/NOV/22
-Day: Saturday
-Time:2-3 PM
-Duration: -
-HR number :
-Linked recieved: No
+
 
 
 
